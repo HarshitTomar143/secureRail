@@ -1,12 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { supabase } from "../../lib/supabaseClient";
+import { supabase } from "../..//lib/supabaseClient";
 
 export default function InventoryPage() {
   const [inventory, setInventory] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // A master list of all possible product types
+  const ALL_PRODUCT_TYPES = ["Rail Clips", "Rail Pads", "Food"];
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -20,11 +23,23 @@ export default function InventoryPage() {
           throw new Error(error.message);
         }
 
-        const counts = products.reduce((acc, product) => {
-          const type = product.product_type || "Other";
-          acc[type] = (acc[type] || 0) + 1;
+        // Initialize counts for all product types to 0
+        const initialCounts = ALL_PRODUCT_TYPES.reduce((acc, type) => {
+          acc[type] = 0;
           return acc;
         }, {});
+
+        // Update counts based on fetched data
+        const counts = products.reduce((acc, product) => {
+          const type = product.product_type || "Other";
+          if (acc[type] !== undefined) {
+            acc[type] += 1;
+          } else {
+            // Handle new product types if they are added
+            acc[type] = 1;
+          }
+          return acc;
+        }, initialCounts);
 
         setInventory(counts);
       } catch (err) {
