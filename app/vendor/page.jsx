@@ -16,8 +16,8 @@ export default function Dashboard({ vendor }) {
     <div className="min-h-screen bg-gray-50">
       {/* Navbar */}
       <header className="flex justify-between items-center px-6 py-4 bg-white shadow">
-        <h1 className="text-xl font-semibold text-gray-800">
-          Welcome: <span className="text-blue-600">John Doe</span>
+        <h1 className="text-xl font-semibold text-gray-800 ">
+          Welcome: <span className="text-blue-600">John Doe</span> To Irct's Vendor Dashboard
         </h1>
         <button
           onClick={handleLogout}
@@ -41,7 +41,7 @@ export default function Dashboard({ vendor }) {
           </Link>
 
           <Link
-            href="/dashboard/inventory"
+            href="/inventory"
             className="p-6 bg-white rounded-2xl shadow hover:shadow-lg transition"
           >
             <h3 className="text-lg font-semibold mb-2 text-green-600">Inventory</h3>
